@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    
+    <title>filepicker</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+       
+    <script src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
+    
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+    <script src="../src/mugen.js"></script>
+    
+    <script>
+     
+      
+       $(document).ready(function() {
+         
+         // create a bootstrap input-group from a button and a textfield
+         var markup = mugen.render({
+           className: 'input-group', 
+           children: [
+            {
+              element: '#{button}',  
+              className: 'btn btn-default', 
+              wrapper: '<div class="input-group-btn"></div>'
+            }, 
+            {
+              element: '#{input}',  
+              className: 'form-control'
+            }
+           ]
+         }, {
+           button: document.getElementById('button'), 
+           input: document.getElementById('input')
+         }, document.getElementById('test'));
+         
+       });
+        
+        
+    </script>
+  </head>
+  
+  <body>
+
+    <header class="subhead" id="overview">
+      <div class="container">
+        <h1>js-mugen</h1>
+        <p class="lead">A simple javascript markup engine
+        </p>
+      </div>
+    </header>
+  
+    <div class="container">
+        
+<pre>mugen.render({
+  className: 'input-group', 
+  children: [
+    {
+      element: '#{button}',  
+      className: 'btn btn-default', 
+      wrapper: '&lt;div class="input-group-btn"&gt;&lt;/div&gt;'
+    }, 
+    {
+      element: '#{input}',  
+      className: 'form-control'
+    }
+  ]
+  }, {
+    button: document.getElementById('button'), 
+    input: document.getElementById('input')
+  }, document.getElementById('test'));
+});</pre>
+<pre>
+&lt;div id="test"&gt;
+  &lt;button id="button">Test&lt;/button&gt;
+  &lt;input id="input" value="This is the input value"/&gt;
+&lt;/div&gt;
+</pre>
+      <div class="row">
+        <div class="col-md-3">
+          <div id="test">
+            <button id="button">Test</button>
+            <input id="input" value="This is the input value"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </body>
+  
+</html>
