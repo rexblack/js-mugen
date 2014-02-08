@@ -6,7 +6,7 @@ A simple json markup engine.
 The purpose of mugen is to serve as a markup engine that can be embedded in javascript components. 
 
 Most javascript plugins provide no markup options, but styling via css is not sufficient in many cases. 
-Different css frameworks often require a different markup, 
+Different css frameworks often require a different markup.  
 This is why we often need different plugins for different frameworks, such as jquery-ui or bootstrap, although the business logic of those components is almost the same. 
 
 Mugen addresses these issues by providing a simple json / templating interface which can be setup through the options of a plugin. 
