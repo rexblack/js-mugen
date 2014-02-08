@@ -1,8 +1,6 @@
-+function() {
+(function() {
   
   /* JSON Markup Processor */
- 
-  if (window.mugen) return;
  
   function parseHTML(html) {
     var el = document.createElement( 'div' ), fragment = document.createDocumentFragment();
@@ -57,9 +55,17 @@
   }
   
   
-  function createElement(object, element) {
+  function render(object, element) {
     
     if (!object) return null;
+    
+    if (object instanceof Array) {
+      
+      element = element || document.createDocumentFragment();
+      for (var i = 0, item; item = object[i]; i++)
+        element.appendChild(render(item));
+      return element;
+    }
     
     if (typeof object == 'string')
       return parseHTML(object);
@@ -76,34 +82,19 @@
       for (var x in object.data) 
         element.setAttribute("data-" + hyphenate(x), object.data[x]);
           
+      
       // children
-      createNodeList(object.children, element);
+      render(object.children, element);
       
       // props
       setProperties(element, object);
       
       // wrapper
-      element = wrap(element, createElement(object.wrapper));
+      element = wrap(element, render(object.wrapper));
 
       return element;
     }
     
-  }
-  
-  function createNodeList(items, element) {
-    if (!items) return [];
-    element = element || document.createDocumentFragment();
-    for (var i = 0, item; item = items[i]; i++)
-      element.appendChild(createElement(item));
-    return element;
-  }
-  
-  function render(object, element) {
-    if (object instanceof Array)
-      element = createNodeList(object, element);
-    else
-      element = createElement(object, element);
-    return element;
   }
   
   function Mugen() {
@@ -113,6 +104,10 @@
     };
   }
   
-  window.mugen = new Mugen();
+  var mugen = new Mugen();
   
-}();
+  window.mugen = mugen;
+  
+  return mugen;
+  
+})();
