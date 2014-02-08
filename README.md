@@ -5,6 +5,7 @@ A simple json markup engine
 
 Example
 -------
+Creating bootstrap input-group from a button and a textfield. 
 
 ```
 mugen.render({
