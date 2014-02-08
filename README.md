@@ -1,4 +1,4 @@
-js-mugen
+mugen.js
 ========
 
 A simple json markup engine

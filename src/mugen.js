@@ -54,7 +54,6 @@
     return wrapper;
   }
   
-  
   function render(object, element) {
     
     if (!object) return null;
@@ -82,7 +81,6 @@
       for (var x in object.data) 
         element.setAttribute("data-" + hyphenate(x), object.data[x]);
           
-      
       // children
       render(object.children, element);
       
@@ -94,7 +92,6 @@
 
       return element;
     }
-    
   }
   
   function Mugen() {
