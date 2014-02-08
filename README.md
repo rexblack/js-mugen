@@ -6,7 +6,7 @@ A simple json markup engine
 Example
 -------
 
-ллл
+```
 mugen.render({
   className: 'input-group', 
   children: [
@@ -25,11 +25,11 @@ mugen.render({
     input: document.getElementById('input')
   }, document.getElementById('test'));
 });
-ллл
+```
 
-ллл
+```
 <div id="test">
   <button id="button">Test</button>
   <input id="input" value="This is the input value"/>
 </div>
-ллл
+```
