@@ -2,8 +2,10 @@
   
   /* JSON Markup Processor */
  
+  var doc = document, win = window;
+ 
   function parseHTML(html) {
-    var el = document.createElement( 'div' ), fragment = document.createDocumentFragment();
+    var el = doc.createElement( 'div' ), fragment = doc.createDocumentFragment();
     el.innerHTML = html;
     for (var i = 0, item; item = el.childNodes[i]; i++) fragment.appendChild(item);
     return fragment;
@@ -60,7 +62,7 @@
     
     if (object instanceof Array) {
       
-      element = element || document.createDocumentFragment();
+      element = element || doc.createDocumentFragment();
       for (var i = 0, item; item = object[i]; i++)
         element.appendChild(render(item));
       return element;
@@ -71,7 +73,7 @@
     
     if (typeof object == 'object') {
       var nodeName = object.nodeName || object.tagName || 'div';
-      element = element || object.element || document.createElement(nodeName);
+      element = element || object.element || doc.createElement(nodeName);
         
       // attributes
       for (var x in object.attributes) 
@@ -103,7 +105,7 @@
   
   var mugen = new Mugen();
   
-  window.mugen = mugen;
+  win.mugen = win.mugen || mugen;
   
   return mugen;
   
