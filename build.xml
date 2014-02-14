@@ -19,8 +19,8 @@
     </copy>
     
     <java jar="${build.yuicompressor}" fork="true" failonerror="true">
-      <arg value="${build.dir}/mugen.js"/>
-      <arg line="-o ${build.dir}/mugen.min.js"/>
+      <arg value="${build.dir}/mugine.js"/>
+      <arg line="-o ${build.dir}/mugine.min.js"/>
     </java>
   
   </target>

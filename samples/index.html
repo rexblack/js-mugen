@@ -3,45 +3,39 @@
   <head>
     <meta charset="utf-8"/>
     
-    <title>mugen.js</title>
+    <title>mugine.js</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
     
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
        
     <script src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
     
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+     
+    <!--
+    <link href="http://localhost/lib/bootstrap-3.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      
+    <script src="http://localhost/lib/jquery/jquery.js"></script>
     
-    <script src="../src/mugen.js"></script>
+    <script src="http://localhost/lib/bootstrap-3.0.0/dist/js/bootstrap.min.js"></script>
+   -->
+   
+    <script src="../src/mugine.js"></script>
+    
+    <script src="jquery.example.js"></script>
+    
+    <script src="jquery.wysiwyg-example.js"></script>
     
     <script>
-     
-      
-       $(document).ready(function() {
-         
-         // create a bootstrap input-group from a button and a textfield
-         var markup = mugen.render({
-           className: 'input-group', 
-           children: [
-            {
-              element: '#{button}',  
-              className: 'btn btn-default', 
-              wrapper: '<div class="input-group-btn"></div>'
-            }, 
-            {
-              element: '#{input}',  
-              className: 'form-control'
-            }
-           ]
-         }, {
-           button: document.getElementById('button'), 
-           input: document.getElementById('input')
-         }, document.getElementById('test'));
+
+       $(function() {
+        
+         $('*[data-example]').example();
          
        });
-        
-        
+
     </script>
   </head>
   
@@ -49,47 +43,176 @@
 
     <header class="subhead" id="overview">
       <div class="container">
-        <h1>mugen.js</h1>
-        <p class="lead">A simple javascript markup engine
+        <h1>mugine.js</h1>
+        <p class="lead">Javascript markup engine
         </p>
       </div>
     </header>
   
     <div class="container">
+      
+      
+      <h1>Basic usage</h1>
+      
+      <p>Convert a button into a bootstrap button using a json template</p>
         
-<pre>mugen.render({
+      <button id="button1" data-example>Click me</button>
+      <script data-example type="text">// create a bootstrap button using json template
+mugine.render('#button1', {
+  className: 'btn btn-default'
+});</script>
+
+
+      <h4>Using mugine.js as a jquery-plugin</h4>
+      <button id="button4" data-example>Click me</button>
+      <script data-example type="text">$(function() {
+  // using mugine.js as a jquery-plugin
+  $('#button4').render({
+    className: 'btn btn-default'
+  });
+})</script>
+
+      <h2>Using json</h2>
+      
+      <p>Json-Templates are pretty self-explanatory: Think of the dom as an object. </p>
+<p>An object could have any regular html-property, such as 'className' or 'innerHTML'.<br/>
+<ul><li>Create an element by using 'nodeName' or 'tagName'-Property.</li>
+<li>Set attributes as object via the 'attributes'-property.</li>
+<li>Insert children as array via the 'childNodes'-property.</li></ul> </p>
+
+      <h4>Using variable interpolation to inject data into the views</h4> 
+      <button id="button2" data-example>Click me</button>
+      <script data-example type="text">// inject model data using variable interpolation
+mugine.render('#button2', {
+  className: 'btn btn-default', 
+  innerHTML: "#{label}"
+}, {
+  label: 'LabelText'
+});</script>
+
+  
+      <h4>Injecting element references using the 'element'-property</h4>
+      <button id="button3" data-example>Click me</button>
+      <script data-example type="text">// inject elements via the 'element'-property
+var checkbox = document.createElement('input');
+checkbox.setAttribute('type', 'checkbox');
+mugine.render('#button3', {
+  className: 'btn btn-default', 
+  childNodes: [
+    { element: "#{checkbox}" }
+  ]
+}, {
+  checkbox: checkbox
+});</script>
+
+
+      
+      
+
+      <h2>Example 1</h2>
+      
+      <p>Create a bootstrap input-group component from a textfield</p>
+
+      <h4>Using a json template</h4>
+      <div class="row" data-example>
+        <div class="col-md-4">
+          <input id="input1" data-label="Label" data-example/>
+        </div>
+      </div>
+      <script data-example type="text">// create a bootstrap input-group from a textfield using a json template
+mugine.render('#input1', {
   className: 'input-group', 
-  children: [
+  childNodes: [
     {
-      element: '#{button}',  
+      nodeName: 'button', 
+      innerHTML: '<%= element.getAttribute("data-label") %>', 
       className: 'btn btn-default', 
-      wrapper: '&lt;div class="input-group-btn"&gt;&lt;/div&gt;'
-    }, 
+      wrap: '<span class="input-group-btn"></span>'
+    },
     {
-      element: '#{input}',  
+      element: '#{element}', 
       className: 'form-control'
     }
   ]
-  }, {
-    button: document.getElementById('button'), 
-    input: document.getElementById('input')
-  }, document.getElementById('test'));
-});</pre>
-<pre>
-&lt;div id="test"&gt;
-  &lt;button id="button">Test&lt;/button&gt;
-  &lt;input id="input" value="This is the input value"/&gt;
-&lt;/div&gt;
-</pre>
-      <div class="row">
-        <div class="col-md-3">
-          <div id="test">
-            <button id="button">Test</button>
-            <input id="input" value="This is the input value"/>
-          </div>
+});</script>
+
+    
+      <h4>Using a string template</h4>
+      <div class="row" data-example>
+        <div class="col-md-4">
+            <input id="input2" data-label="Label" data-example/>
         </div>
       </div>
+      
+      <script data-example type="text/plain">// create a bootstrap input-group from a textfield using a string template
+mugine.render(
+  '#input2', 
+  '<div class="input-group">' + 
+    '<span class="input-group-btn">' + 
+      '<button class="btn btn-default"><%= element.getAttribute("data-label") %></button>' + 
+    '</span>' + 
+    '<%= _build(element, {className: "form-control " + element.getAttribute("data-label")}) %>' +  
+  '</div>'
+);</script>
+    
+    
+      
+    
+    
+      <h4>Using data attributes</h4>
+
+      <div class="row" data-example>
+        <div class="col-md-4">
+            <input id="input3" data-label="Label" data-example/>
+        </div>
+      </div>
+
+      <script data-example type="text/plain">// create a bootstrap input-group from a textfield using data attributes
+var element = document.getElementById('input3');
+mugine.render(
+  element, 
+  '<div class="input-group">' + 
+    '<span class="input-group-btn">' + 
+      '<button class="btn btn-default"><span data-variable="label"></span></button>' + 
+    '</span>' + 
+    '<input data-variable="element" class="form-control"/>' + 
+  '</div>', {
+    label: element.getAttribute('data-label')
+  }
+);</script>
+    
+    
+
+    
+    
+      
+      <h2>Example 2</h2>
+      <p>A simple wysiwyg-editor plugin: <code><a href="jquery.wysiwyg-example.js">jquery.wysiwyg-example.js</a></code></p>
+      
+      <div class="row" data-example>
+        <div class="col-md-4">
+          <textarea data-example id="wysiwyg-example" rows="8">Hello world.</textarea>
+        </div>
+      </div>
+      <script data-example>// plugin example
+$(function() {
+  $('#wysiwyg-example').wysiwygExample({
+    style: 'bootstrap'
+  });
+});</script>
+
+      
+
+
     </div>
+    
+
+
+
+    <br/>
+    
+    
+    
     
   </body>
   
