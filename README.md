@@ -1,7 +1,7 @@
 mugine.js
 =========
 
-A javascript markup engine. 
+Another javascript markup engine. 
 
 The main purpose of mugine.js is to serve as a markup engine that can be integrated in javascript components, such as jquery-plugins.
 
